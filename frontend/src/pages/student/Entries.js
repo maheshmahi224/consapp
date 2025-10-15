@@ -7,7 +7,8 @@ import {
   X,
   Smile,
   Tag,
-  Calendar
+  Calendar,
+  Clock
 } from 'lucide-react';
 import api from '../../utils/api';
 
@@ -277,11 +278,16 @@ const Entries = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 flex items-center">
+                      <Clock className="h-4 w-4 mr-1" />
                       Time Duration
                     </label>
-                    <div className="flex space-x-2">
+                    <div className="flex space-x-3">
+                      {/* Hours Input */}
                       <div className="flex-1">
+                        <label className="block text-xs font-semibold text-primary-600 dark:text-primary-400 mb-1">
+                          Hours
+                        </label>
                         <div className="relative">
                           <input
                             name="hours"
@@ -289,22 +295,40 @@ const Entries = () => {
                             min="0"
                             value={formData.timeDuration.hours}
                             onChange={handleChange}
-                            placeholder="Hours"
-                            className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                            placeholder="0"
+                            className="block w-full px-3 py-2 pr-8 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-center font-semibold text-lg"
                           />
+                          <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                            <span className="text-gray-500 dark:text-gray-400 text-sm font-medium">hrs</span>
+                          </div>
                         </div>
                       </div>
+
+                      {/* Separator */}
+                      <div className="flex items-end pb-2">
+                        <span className="text-2xl font-bold text-gray-400">:</span>
+                      </div>
+
+                      {/* Minutes Input */}
                       <div className="flex-1">
-                        <input
-                          name="minutes"
-                          type="number"
-                          min="0"
-                          max="59"
-                          value={formData.timeDuration.minutes}
-                          onChange={handleChange}
-                          placeholder="Minutes"
-                          className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                        />
+                        <label className="block text-xs font-semibold text-orange-600 dark:text-orange-400 mb-1">
+                          Minutes
+                        </label>
+                        <div className="relative">
+                          <input
+                            name="minutes"
+                            type="number"
+                            min="0"
+                            max="59"
+                            value={formData.timeDuration.minutes}
+                            onChange={handleChange}
+                            placeholder="0"
+                            className="block w-full px-3 py-2 pr-8 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-center font-semibold text-lg"
+                          />
+                          <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                            <span className="text-gray-500 dark:text-gray-400 text-sm font-medium">mins</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
