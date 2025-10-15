@@ -12,8 +12,10 @@ import {
 } from 'recharts';
 import api from '../../utils/api';
 import StatCard from '../../components/StatCard';
+import { useAuth } from '../../context/AuthContext';
 
 const AdminDashboard = () => {
+  const { user } = useAuth();
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -41,10 +43,12 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-4 sm:p-6 space-y-6">
       {/* Welcome Section */}
       <div className="bg-gradient-to-r from-primary-600 to-primary-400 rounded-lg shadow-lg p-6 text-white">
-        <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold">
+          Welcome, {user?.name || 'Admin'}! 👋
+        </h1>
         <p className="mt-2 text-primary-100">
           Monitor and manage student performance across the platform
         </p>

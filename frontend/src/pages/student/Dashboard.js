@@ -40,11 +40,11 @@ const Dashboard = () => {
   })) || [];
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-4 sm:p-6 space-y-6">
       {/* Welcome Section */}
       <div className="bg-gradient-to-r from-primary-600 to-primary-400 rounded-lg shadow-lg p-6 text-white">
-        <h1 className="text-3xl font-bold">Welcome back, {user?.name}! 👋</h1>
-        <p className="mt-2 text-primary-100">
+        <h1 className="text-2xl sm:text-3xl font-bold">Welcome back, {user?.name}! 👋</h1>
+        <p className="mt-2 text-sm sm:text-base text-primary-100">
           Let's track your learning journey and stay consistent!
         </p>
       </div>
