@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 
 const Navbar = () => {
-  const { user, logout, isAuthenticated } = useAuth();
+  const { logout, isAuthenticated } = useAuth();
   const { darkMode, toggleDarkMode } = useTheme();
   const location = useLocation();
 

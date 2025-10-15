@@ -12,10 +12,7 @@ import {
 } from 'recharts';
 import api from '../../utils/api';
 import StatCard from '../../components/StatCard';
-import { useAuth } from '../../context/AuthContext';
-
 const AdminDashboard = () => {
-  const { user } = useAuth();
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
 
