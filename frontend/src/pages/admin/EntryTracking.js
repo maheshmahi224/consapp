@@ -14,6 +14,7 @@ import {
   Sparkles,
   TrendingUp
 } from 'lucide-react';
+import * as XLSX from 'xlsx';
 import api from '../../utils/api';
 
 const EntryTracking = () => {
@@ -93,6 +94,73 @@ const EntryTracking = () => {
     const matchesMood = !filterMood || entry.mood === filterMood;
     return matchesSearch && matchesMood;
   });
+
+  const exportToExcel = () => {
+    if (filteredEntries.length === 0) {
+      toast.warning('No entries to export');
+      return;
+    }
+
+    // Prepare data for Excel
+    const excelData = filteredEntries.map((entry, index) => ({
+      'S.No': index + 1,
+      'Date': new Date(entry.date).toLocaleDateString(),
+      'Student Name': entry.userId?.name || 'N/A',
+      'Email': entry.userId?.email || 'N/A',
+      'College': entry.userId?.college || 'N/A',
+      'Year': entry.userId?.year || 'N/A',
+      'Time (Hours)': entry.timeDuration?.hours || 0,
+      'Time (Minutes)': entry.timeDuration?.minutes || 0,
+      'Total Hours': ((entry.timeDuration?.hours || 0) + (entry.timeDuration?.minutes || 0) / 60).toFixed(2),
+      'Concepts Learned': entry.concepts || 'N/A',
+      'Mood': entry.mood || 'N/A',
+      'Learning Type': entry.learningType || 'N/A',
+      'Tag': entry.tag || 'N/A',
+      'Problems Practiced': entry.problemsPracticed || 'N/A',
+      'Doubts': entry.doubts || 'N/A',
+      'GitHub Repo': entry.githubRepo || 'N/A',
+      'LeetCode Link': entry.leetcodeLink || 'N/A',
+      'HackerRank Link': entry.hackerrankLink || 'N/A',
+    }));
+
+    // Create worksheet
+    const worksheet = XLSX.utils.json_to_sheet(excelData);
+
+    // Set column widths
+    const columnWidths = [
+      { wch: 6 },  // S.No
+      { wch: 12 }, // Date
+      { wch: 20 }, // Student Name
+      { wch: 25 }, // Email
+      { wch: 30 }, // College
+      { wch: 10 }, // Year
+      { wch: 12 }, // Time (Hours)
+      { wch: 15 }, // Time (Minutes)
+      { wch: 12 }, // Total Hours
+      { wch: 40 }, // Concepts
+      { wch: 12 }, // Mood
+      { wch: 15 }, // Learning Type
+      { wch: 15 }, // Tag
+      { wch: 25 }, // Problems
+      { wch: 30 }, // Doubts
+      { wch: 35 }, // GitHub
+      { wch: 35 }, // LeetCode
+      { wch: 35 }, // HackerRank
+    ];
+    worksheet['!cols'] = columnWidths;
+
+    // Create workbook
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Entries');
+
+    // Generate filename
+    const fileName = `${selectedCollege}_${selectedDate}_entries.xlsx`;
+
+    // Save file
+    XLSX.writeFile(workbook, fileName);
+
+    toast.success(`Exported ${filteredEntries.length} entries to Excel!`);
+  };
 
   if (loading && collegeStats.length === 0) {
     return (
@@ -230,8 +298,9 @@ const EntryTracking = () => {
               </div>
               
               <button
-                onClick={() => toast.info('Export feature coming soon!')}
-                className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-colors flex items-center gap-2"
+                onClick={exportToExcel}
+                className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-colors flex items-center gap-2 shadow-lg hover:shadow-xl"
+                title={`Export ${filteredEntries.length} entries to Excel`}
               >
                 <Download className="h-4 w-4" />
                 Export to Excel
