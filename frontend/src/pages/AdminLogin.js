@@ -10,7 +10,7 @@ const AdminLogin = () => {
     password: '',
   });
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
+  const { login, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -24,9 +24,11 @@ const AdminLogin = () => {
     try {
       const userData = await login(formData.email, formData.password);
       
-      // Check if user is admin
+      // Check if user is admin (reject student credentials)
       if (userData.role !== 'admin') {
-        toast.error('Access denied! Admin credentials required.');
+        toast.error('Access denied! Admin credentials required. Students should use the Student Login page.');
+        // Logout to clear student credentials
+        logout();
         setLoading(false);
         return;
       }

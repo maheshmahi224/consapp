@@ -10,7 +10,7 @@ const Login = () => {
     password: '',
   });
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
+  const { login, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -22,9 +22,18 @@ const Login = () => {
     setLoading(true);
 
     try {
-      await login(formData.email, formData.password);
+      const userData = await login(formData.email, formData.password);
       
-      // Redirect to student dashboard (admins should use /admin/login)
+      // Check if user is a student (reject admin credentials)
+      if (userData.role !== 'student') {
+        toast.error('Access denied! This is the student login. Admins should use the Admin Login page.');
+        // Logout to clear admin credentials
+        logout();
+        setLoading(false);
+        return;
+      }
+      
+      // Redirect to student dashboard
       toast.success('Login successful!');
       navigate('/student/dashboard');
     } catch (error) {
