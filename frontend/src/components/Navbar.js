@@ -1,12 +1,14 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Moon, Sun, LogOut } from 'lucide-react';
+import { Moon, Sun, LogOut, Menu } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
+import { useSidebar } from '../context/SidebarContext';
 
 const Navbar = () => {
   const { logout, isAuthenticated } = useAuth();
   const { darkMode, toggleDarkMode } = useTheme();
+  const { toggleSidebar } = useSidebar();
   const location = useLocation();
 
   // Don't show user info on login/register pages
@@ -23,8 +25,20 @@ const Navbar = () => {
     <nav className="bg-white dark:bg-gray-800 shadow-lg sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <div className="flex items-center flex-shrink-0">
+          {/* Logo with Hamburger Menu */}
+          <div className="flex items-center space-x-3 flex-shrink-0">
+            {/* Hamburger Menu - Mobile Only */}
+            {showUserInfo && (
+              <button
+                onClick={toggleSidebar}
+                className="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                aria-label="Toggle menu"
+              >
+                <Menu className="h-6 w-6 text-gray-700 dark:text-gray-300" />
+              </button>
+            )}
+            
+            {/* Logo */}
             <Link to="/" className="flex items-center">
               <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent">
                 Consistency.ai

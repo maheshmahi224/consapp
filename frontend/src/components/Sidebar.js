@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
   Home,
   User,
   BookOpen,
   BarChart3,
-  Menu,
   X,
   Users,
   Trophy,
@@ -13,9 +12,10 @@ import {
   FileText
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useSidebar } from '../context/SidebarContext';
 
 const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const { isSidebarOpen, closeSidebar } = useSidebar();
   const location = useLocation();
   const { isAdmin } = useAuth();
 
@@ -40,23 +40,26 @@ const Sidebar = () => {
 
   return (
     <>
-      {/* Mobile menu button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="lg:hidden fixed top-20 left-4 z-50 p-2 bg-primary-600 text-white rounded-lg shadow-lg"
-      >
-        {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-      </button>
-
       {/* Sidebar */}
       <aside
         className={`
           fixed lg:sticky top-16 left-0 h-[calc(100vh-4rem)] w-64 
           bg-white dark:bg-gray-800 shadow-lg transition-transform duration-300 ease-in-out z-40
           overflow-y-auto
-          ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+          ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
         `}
       >
+        {/* Close button - Mobile only */}
+        <div className="lg:hidden flex justify-end p-4">
+          <button
+            onClick={closeSidebar}
+            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+            aria-label="Close menu"
+          >
+            <X className="h-6 w-6 text-gray-700 dark:text-gray-300" />
+          </button>
+        </div>
+
         <nav className="p-4 space-y-2">
           {links.map((link) => {
             const Icon = link.icon;
@@ -64,7 +67,7 @@ const Sidebar = () => {
               <Link
                 key={link.to}
                 to={link.to}
-                onClick={() => setIsOpen(false)}
+                onClick={closeSidebar}
                 className={`
                   flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors
                   ${
@@ -83,10 +86,10 @@ const Sidebar = () => {
       </aside>
 
       {/* Overlay for mobile */}
-      {isOpen && (
+      {isSidebarOpen && (
         <div
           className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-30"
-          onClick={() => setIsOpen(false)}
+          onClick={closeSidebar}
         ></div>
       )}
     </>
