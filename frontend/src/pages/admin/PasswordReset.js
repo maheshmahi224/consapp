@@ -27,10 +27,11 @@ const PasswordReset = () => {
 
   const fetchStudents = async () => {
     try {
-      const response = await api.get('/admin/students');
+      const response = await api.get('/users/students');
       setStudents(response.data);
     } catch (error) {
       toast.error('Failed to fetch students');
+      console.error('Fetch students error:', error);
     } finally {
       setLoading(false);
     }
