@@ -34,13 +34,6 @@ const Navbar = () => {
 
           {/* Right Side */}
           <div className="flex items-center space-x-2 sm:space-x-4">
-            {/* Welcome Message - Hidden on mobile */}
-            {showUserInfo && user && (
-              <span className="hidden md:block text-sm text-gray-700 dark:text-gray-300">
-                Welcome, <span className="font-semibold">{user.name}</span>
-              </span>
-            )}
-
             {/* Dark Mode Toggle */}
             <button
               onClick={toggleDarkMode}
