@@ -8,7 +8,6 @@ import {
   Github,
   Code,
   ExternalLink,
-  Filter,
   Download,
   Search,
   Clock,
@@ -25,10 +24,8 @@ const EntryTracking = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterMood, setFilterMood] = useState('');
-  const [colleges, setColleges] = useState([]);
 
   useEffect(() => {
-    fetchColleges();
     fetchCollegeStats();
   }, [selectedDate]);
 
@@ -37,15 +34,6 @@ const EntryTracking = () => {
       fetchEntries();
     }
   }, [selectedCollege, selectedDate]);
-
-  const fetchColleges = async () => {
-    try {
-      const response = await api.get('/colleges');
-      setColleges(response.data);
-    } catch (error) {
-      console.error('Failed to fetch colleges');
-    }
-  };
 
   const fetchCollegeStats = async () => {
     try {

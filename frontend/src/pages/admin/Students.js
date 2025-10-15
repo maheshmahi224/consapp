@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import {
   Search,
-  Filter,
   Eye,
   Phone,
   Github,

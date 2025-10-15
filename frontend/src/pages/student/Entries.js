@@ -5,11 +5,6 @@ import {
   Edit,
   Trash2,
   X,
-  Clock,
-  BookOpen,
-  Github,
-  Code,
-  MessageSquare,
   Smile,
   Tag,
   Calendar

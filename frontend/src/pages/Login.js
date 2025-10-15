@@ -22,7 +22,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const userData = await login(formData.email, formData.password);
+      await login(formData.email, formData.password);
       
       // Redirect to student dashboard (admins should use /admin/login)
       toast.success('Login successful!');

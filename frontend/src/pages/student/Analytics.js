@@ -14,7 +14,7 @@ import {
   Legend,
   ResponsiveContainer
 } from 'recharts';
-import { Clock, BookOpen, Github, Code, TrendingUp } from 'lucide-react';
+import { Clock, BookOpen, Github, TrendingUp } from 'lucide-react';
 import api from '../../utils/api';
 import StatCard from '../../components/StatCard';
 
