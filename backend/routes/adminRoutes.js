@@ -5,7 +5,8 @@ const {
   getLeaderboard,
   updatePayment,
   getEntriesTracking,
-  getCollegeEntryStats
+  getCollegeEntryStats,
+  resetStudentPassword
 } = require('../controllers/adminController');
 const { protect, admin } = require('../middleware/auth');
 
@@ -14,5 +15,6 @@ router.get('/leaderboard', protect, admin, getLeaderboard);
 router.post('/students/:id/payment', protect, admin, updatePayment);
 router.get('/entries', protect, admin, getEntriesTracking);
 router.get('/college-stats', protect, admin, getCollegeEntryStats);
+router.post('/reset-password/:id', protect, admin, resetStudentPassword);
 
 module.exports = router;

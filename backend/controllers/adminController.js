@@ -286,10 +286,40 @@ const getCollegeEntryStats = async (req, res) => {
   }
 };
 
+// @desc    Reset student password (emergency)
+// @route   POST /api/admin/reset-password/:id
+// @access  Private/Admin
+const resetStudentPassword = async (req, res) => {
+  try {
+    const student = await User.findById(req.params.id);
+
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+
+    if (student.role !== 'student') {
+      return res.status(400).json({ message: 'Can only reset passwords for students' });
+    }
+
+    // Clear the password - set to undefined
+    // This allows the student to register again with the same email
+    student.password = undefined;
+    await student.save({ validateBeforeSave: false });
+
+    res.json({ 
+      message: `Password reset successfully for ${student.name}. Student can now register again with their email.`
+    });
+  } catch (error) {
+    console.error('Password reset error:', error);
+    res.status(500).json({ message: 'Server error while resetting password' });
+  }
+};
+
 module.exports = {
   getAdminStats,
   getLeaderboard,
   updatePayment,
   getEntriesTracking,
-  getCollegeEntryStats
+  getCollegeEntryStats,
+  resetStudentPassword
 };

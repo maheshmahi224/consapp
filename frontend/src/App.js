@@ -27,6 +27,7 @@ import AdminStudents from './pages/admin/Students';
 import AdminLeaderboard from './pages/admin/Leaderboard';
 import AdminSettings from './pages/admin/Settings';
 import AdminEntryTracking from './pages/admin/EntryTracking';
+import AdminPasswordReset from './pages/admin/PasswordReset';
 
 function AppContent() {
   const { isAuthenticated } = useAuth();
@@ -117,6 +118,14 @@ function AppContent() {
               element={
                 <ProtectedRoute adminOnly>
                   <AdminEntryTracking />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/password-reset"
+              element={
+                <ProtectedRoute adminOnly>
+                  <AdminPasswordReset />
                 </ProtectedRoute>
               }
             />

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { Plus, Edit, Trash2, Building2, CheckCircle, XCircle } from 'lucide-react';
+import { Plus, Edit, Trash2, Building2, CheckCircle, XCircle, KeyRound } from 'lucide-react';
 import api from '../../utils/api';
 
 const Settings = () => {
+  const navigate = useNavigate();
   const [colleges, setColleges] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -88,23 +90,49 @@ const Settings = () => {
   }
 
   return (
-    <div className="p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Settings</h1>
+    <div className="p-4 sm:p-6 max-w-full overflow-x-hidden">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Settings</h1>
         <button
           onClick={() => {
             setEditingCollege(null);
             setCollegeName('');
             setShowModal(true);
           }}
-          className="flex items-center space-x-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+          className="flex items-center justify-center space-x-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
         >
           <Plus className="h-5 w-5" />
           <span>Add College</span>
         </button>
       </div>
 
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+      {/* Student Password Reset Card */}
+      <div className="bg-gradient-to-r from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 rounded-lg shadow-md p-6 mb-6 border-2 border-red-200 dark:border-red-800">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="flex items-start space-x-4">
+            <div className="bg-red-100 dark:bg-red-900 p-3 rounded-lg">
+              <KeyRound className="h-6 w-6 text-red-600 dark:text-red-400" />
+            </div>
+            <div>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                Student Password Reset
+              </h2>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Reset passwords for students who have forgotten their credentials. This will clear their password and they'll need to register again.
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={() => navigate('/admin/password-reset')}
+            className="flex items-center justify-center space-x-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors whitespace-nowrap"
+          >
+            <KeyRound className="h-5 w-5" />
+            <span>Reset Passwords</span>
+          </button>
+        </div>
+      </div>
+
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 sm:p-6 overflow-hidden">
         <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
           Manage Colleges
         </h2>
