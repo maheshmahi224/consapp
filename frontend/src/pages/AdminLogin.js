@@ -41,15 +41,15 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 to-purple-100 dark:from-gray-900 dark:to-gray-800 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8 bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-2xl">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 to-purple-100 dark:from-gray-900 dark:to-gray-800 py-6 sm:py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-6 sm:space-y-8 bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-2xl shadow-2xl">
         <div>
           <div className="flex justify-center mb-4">
-            <div className="bg-indigo-600 p-4 rounded-full">
-              <ShieldCheck className="h-12 w-12 text-white" />
+            <div className="bg-indigo-600 p-3 sm:p-4 rounded-full">
+              <ShieldCheck className="h-10 w-10 sm:h-12 sm:w-12 text-white" />
             </div>
           </div>
-          <h2 className="text-center text-4xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-400 bg-clip-text text-transparent">
+          <h2 className="text-center text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-400 bg-clip-text text-transparent">
             Admin Portal
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">

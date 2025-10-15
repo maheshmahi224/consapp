@@ -35,16 +35,16 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 to-primary-100 dark:from-gray-900 dark:to-gray-800 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8 bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-2xl">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 to-primary-100 dark:from-gray-900 dark:to-gray-800 py-6 sm:py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-6 sm:space-y-8 bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-2xl shadow-2xl">
         <div>
-          <h2 className="text-center text-4xl font-extrabold bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent">
+          <h2 className="text-center text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent">
             Consistency.ai
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
             Student Performance Tracker
           </p>
-          <h3 className="mt-6 text-center text-2xl font-bold text-gray-900 dark:text-white">
+          <h3 className="mt-4 sm:mt-6 text-center text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
             Sign in to your account
           </h3>
         </div>

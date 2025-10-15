@@ -103,29 +103,29 @@ const EntryTracking = () => {
   }
 
   return (
-    <div className="p-6 max-w-[1800px] mx-auto">
+    <div className="p-4 sm:p-6 max-w-[1800px] mx-auto">
       {/* Header */}
       <div className="mb-6">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
-              <Sparkles className="h-8 w-8 text-primary-600" />
-              Entry Tracking Dashboard
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-2 sm:gap-3">
+              <Sparkles className="h-6 w-6 sm:h-8 sm:w-8 text-primary-600" />
+              <span className="leading-tight">Entry Tracking</span>
             </h1>
-            <p className="text-gray-600 dark:text-gray-400 mt-1">
-              Monitor student daily learning entries across all colleges
+            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mt-1">
+              Monitor student daily learning entries
             </p>
           </div>
           
           {/* Date Picker */}
           <div className="flex items-center gap-3">
-            <div className="relative">
+            <div className="relative w-full sm:w-auto">
               <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
               <input
                 type="date"
                 value={selectedDate}
                 onChange={(e) => setSelectedDate(e.target.value)}
-                className="pl-10 pr-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white font-medium"
+                className="w-full sm:w-auto pl-10 pr-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white font-medium text-sm sm:text-base"
               />
             </div>
           </div>
@@ -272,24 +272,25 @@ const EntryTracking = () => {
               <p className="text-xl text-gray-500 dark:text-gray-400">No entries found</p>
             </div>
           ) : (
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700">
-              {/* Table Header - Excel Style */}
-              <div className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 border-b-2 border-gray-300 dark:border-gray-600">
-                <div className="grid grid-cols-12 gap-4 p-4 font-bold text-sm text-gray-700 dark:text-gray-300">
-                  <div className="col-span-2">Student Info</div>
-                  <div className="col-span-1 text-center">Time</div>
-                  <div className="col-span-2">Concepts</div>
-                  <div className="col-span-2">Problems</div>
-                  <div className="col-span-1 text-center">Mood</div>
-                  <div className="col-span-1 text-center">Type</div>
-                  <div className="col-span-2 text-center">Platform Links</div>
-                  <div className="col-span-1 text-center">Status</div>
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl overflow-x-auto border border-gray-200 dark:border-gray-700">
+              <div className="min-w-[1000px]">
+                {/* Table Header - Excel Style */}
+                <div className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 border-b-2 border-gray-300 dark:border-gray-600">
+                  <div className="grid grid-cols-12 gap-4 p-4 font-bold text-sm text-gray-700 dark:text-gray-300">
+                    <div className="col-span-2">Student Info</div>
+                    <div className="col-span-1 text-center">Time</div>
+                    <div className="col-span-2">Concepts</div>
+                    <div className="col-span-2">Problems</div>
+                    <div className="col-span-1 text-center">Mood</div>
+                    <div className="col-span-1 text-center">Type</div>
+                    <div className="col-span-2 text-center">Platform Links</div>
+                    <div className="col-span-1 text-center">Status</div>
+                  </div>
                 </div>
-              </div>
 
-              {/* Table Body */}
-              <div className="divide-y divide-gray-200 dark:divide-gray-700">
-                {filteredEntries.map((entry, index) => (
+                {/* Table Body */}
+                <div className="divide-y divide-gray-200 dark:divide-gray-700">
+                  {filteredEntries.map((entry, index) => (
                   <div
                     key={entry._id}
                     className="grid grid-cols-12 gap-4 p-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors items-start"
@@ -411,7 +412,8 @@ const EntryTracking = () => {
                       </div>
                     </div>
                   </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
           )}
