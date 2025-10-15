@@ -14,6 +14,8 @@ const PasswordReset = () => {
   const [filterYear, setFilterYear] = useState('');
   const [colleges, setColleges] = useState([]);
   const [resettingId, setResettingId] = useState(null);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [selectedStudent, setSelectedStudent] = useState(null);
 
   useEffect(() => {
     fetchStudents();
@@ -72,30 +74,33 @@ const PasswordReset = () => {
     setFilteredStudents(filtered);
   };
 
-  const handleResetPassword = async (student) => {
-    const confirmed = window.confirm(
-      `⚠️ WARNING: Reset password for ${student.name}?\n\n` +
-      `Email: ${student.email}\n\n` +
-      `This will:\n` +
-      `• Delete their current password\n` +
-      `• They will need to register again with the same email\n` +
-      `• All their data will be preserved\n\n` +
-      `Are you absolutely sure?`
-    );
+  const handleResetPassword = (student) => {
+    setSelectedStudent(student);
+    setShowConfirmModal(true);
+  };
 
-    if (!confirmed) return;
+  const confirmResetPassword = async () => {
+    if (!selectedStudent) return;
 
-    setResettingId(student._id);
+    setShowConfirmModal(false);
+    setResettingId(selectedStudent._id);
+    
     try {
-      await api.post(`/admin/reset-password/${student._id}`);
-      toast.success(`Password reset successfully for ${student.name}. They can now register again.`);
+      await api.post(`/admin/reset-password/${selectedStudent._id}`);
+      toast.success(`Password reset successfully for ${selectedStudent.name}. They can now register again.`);
       // Optionally refresh the list
       fetchStudents();
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to reset password');
     } finally {
       setResettingId(null);
+      setSelectedStudent(null);
     }
+  };
+
+  const cancelResetPassword = () => {
+    setShowConfirmModal(false);
+    setSelectedStudent(null);
   };
 
   if (loading) {
@@ -314,6 +319,92 @@ const PasswordReset = () => {
           <li>They can continue from where they left off with a new password</li>
         </ul>
       </div>
+
+      {/* Confirmation Modal */}
+      {showConfirmModal && selectedStudent && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-lg w-full p-6 transform transition-all">
+            {/* Warning Icon */}
+            <div className="flex justify-center mb-4">
+              <div className="bg-red-100 dark:bg-red-900/30 p-4 rounded-full">
+                <AlertTriangle className="h-12 w-12 text-red-600 dark:text-red-400" />
+              </div>
+            </div>
+
+            {/* Title */}
+            <h2 className="text-2xl font-bold text-center text-gray-900 dark:text-white mb-4">
+              ⚠️ Confirm Password Reset
+            </h2>
+
+            {/* Student Info */}
+            <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 mb-4">
+              <div className="space-y-2">
+                <div>
+                  <span className="text-sm text-gray-500 dark:text-gray-400">Student Name:</span>
+                  <p className="text-base font-semibold text-gray-900 dark:text-white">{selectedStudent.name}</p>
+                </div>
+                <div>
+                  <span className="text-sm text-gray-500 dark:text-gray-400">Email:</span>
+                  <p className="text-base font-semibold text-gray-900 dark:text-white">{selectedStudent.email}</p>
+                </div>
+                {selectedStudent.rollNumber && (
+                  <div>
+                    <span className="text-sm text-gray-500 dark:text-gray-400">Roll Number:</span>
+                    <p className="text-base font-semibold text-gray-900 dark:text-white">{selectedStudent.rollNumber}</p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Warning Message */}
+            <div className="bg-red-50 dark:bg-red-900/20 border-l-4 border-red-500 p-4 mb-6">
+              <h3 className="text-sm font-bold text-red-800 dark:text-red-300 mb-2">
+                This action will:
+              </h3>
+              <ul className="text-sm text-red-700 dark:text-red-400 space-y-1">
+                <li className="flex items-start">
+                  <span className="mr-2">•</span>
+                  <span>Delete their current password permanently</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="mr-2">•</span>
+                  <span>Require them to register again with the same email</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="mr-2">•</span>
+                  <span>Preserve all their data (entries, progress, analytics)</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Confirmation Question */}
+            <p className="text-center text-lg font-semibold text-gray-900 dark:text-white mb-6">
+              Are you absolutely sure you want to reset this password?
+            </p>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3">
+              <button
+                onClick={cancelResetPassword}
+                className="flex-1 px-6 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 font-semibold hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+              >
+                ❌ No, Cancel
+              </button>
+              <button
+                onClick={confirmResetPassword}
+                className="flex-1 px-6 py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition-colors shadow-lg hover:shadow-xl"
+              >
+                ✅ Yes, Reset Password
+              </button>
+            </div>
+
+            {/* Additional Note */}
+            <p className="text-xs text-center text-gray-500 dark:text-gray-400 mt-4">
+              This action cannot be undone. The student will be notified to re-register.
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
