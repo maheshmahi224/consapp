@@ -35,6 +35,7 @@ const Students = () => {
 
   useEffect(() => {
     filterStudents();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [students, searchTerm, filterCollege, filterYear]);
 
   const fetchStudents = async () => {

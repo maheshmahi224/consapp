@@ -9,6 +9,7 @@ const Leaderboard = () => {
 
   useEffect(() => {
     fetchLeaderboard();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeframe]);
 
   const fetchLeaderboard = async () => {

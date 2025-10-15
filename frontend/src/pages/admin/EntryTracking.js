@@ -27,12 +27,14 @@ const EntryTracking = () => {
 
   useEffect(() => {
     fetchCollegeStats();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDate]);
 
   useEffect(() => {
     if (selectedCollege) {
       fetchEntries();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCollege, selectedDate]);
 
   const fetchCollegeStats = async () => {
